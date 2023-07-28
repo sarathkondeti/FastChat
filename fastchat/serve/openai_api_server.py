@@ -364,7 +364,7 @@ async def create_chat_completion(request: ChatCompletionRequest):
     )
     if error_check_ret is not None:
         return error_check_ret
-
+    print(gen_params)
     if request.stream:
         generator = chat_completion_stream_generator(
             request.model, gen_params, request.n
@@ -395,7 +395,7 @@ async def create_chat_completion(request: ChatCompletionRequest):
             task_usage = UsageInfo.parse_obj(content["usage"])
             for usage_key, usage_value in task_usage.dict().items():
                 setattr(usage, usage_key, getattr(usage, usage_key) + usage_value)
-
+    print(choices,usage)
     return ChatCompletionResponse(model=request.model, choices=choices, usage=usage)
 
 
